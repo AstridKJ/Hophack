@@ -1,11 +1,15 @@
-import { TextField , Grid } from "@mui/material";
+import { TextField , Grid, Typography, Paper, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
+import List from '@mui/material/List';
+
 function SearchPage() {
     // const [courses, setCourses] = useState();
-    // const courses = [(1, "course 1"), (2, "course 2"), (3, "course 3")]
+    // const [studentList, setStudentList] = usetState();
     const courses = [{id: 1, name: "course 1"}, {id: 2, name: "course 2"}, {id: 3, name: "course 3"}]
+    const studentList = [{courseName: 'Course 1', students: ['Astrid', 'Kiron', 'Mitra', 'William']},
+    {courseName: 'Course 2', students: ['John', 'Doe', 'Foo', 'Bar']}]
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
@@ -19,30 +23,52 @@ function SearchPage() {
 
     return (
         <div>
-        <Grid container direction="column" spacing='60px' style={{ marginLeft: '40px', marginTop: '40px' }}>
-            <Grid item>
-                <TextField
-                    id="outlined-basic"
-                    variant="outlined"
-                    label="Search"
-                    onChange={handleTextChange}
-                    />
+        <Grid container direction="row" style={{  marginTop: '40px' }}>
+            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px' }} xs>
+                <Grid item>
+                    <TextField
+                        id="outlined-basic"
+                        variant="outlined"
+                        label="Search"
+                        onChange={handleTextChange}
+                        />
+                    </Grid>
+                <Grid item>
+                    <Stack direction="column" spacing={2}>
+                        {courses ? 
+                        (courses.map(({id, name}) => 
+                            <Button id={id} variant="contained" style={{width: "250px", textTransform: 'capitalize'}}
+                            onClick={(event) => handleShowStudents(event.target.id)}> 
+                                {name} 
+                            </Button>
+                        )) 
+                        : null}
+                    </Stack>
                 </Grid>
-            <Grid item>
-                <Stack direction="column" spacing={2}>
-                    {courses ? 
-                    (courses.map(({id, name}) => 
-                        <Button id={id} variant="contained" style={{width: "300px", textTransform: 'capitalize'}}
-                        onClick={(event) => handleShowStudents(event.target.id)}> 
-                            {name} 
-                        </Button>
-                    )) 
-                    : null}
-                </Stack>
             </Grid>
 
+            {studentList.map((courseInfo) => 
+            <Grid container item xs >
+                <Grid item xs>
+                    <Typography variant="h4" align="center">
+                        {courseInfo.courseName}
+                    </Typography>
+                    <Stack direction="column" spacing={2} alignItems="center"> 
+                        {courseInfo.students ? 
+                        courseInfo.students.map((studentName) => 
+                        <IconButton >
+                            <Paper style={{width: '250px'}}>
+                                {studentName}
+                            </Paper>
+                        </IconButton>
+                        )
+                        : null}
+                    </Stack>
+                </Grid>
             </Grid>
+            )}
 
+        </Grid>
         </div>
   );
 }
