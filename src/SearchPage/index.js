@@ -2,35 +2,36 @@ import { TextField , Grid, Typography, Paper, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
-import List from '@mui/material/List';
 
 function SearchPage() {
     // const [courses, setCourses] = useState();
     // const [studentList, setStudentList] = usetState();
-    const courses = [{id: 1, name: "Mathematical Foundations"}, {id: 2, name: "Probability and Statistics"}, {id: 3, name: "Biomedical Data Science"},  {id: 4, name: "Biochemistry"}]
+    const courses = [{id: 0, name: "Hello"}, {id: 1, name: "Mathematical Foundations"}, {id: 2, name: "Probability and Statistics"}, {id: 3, name: "Biomedical Data Science"},  {id: 4, name: "Biochemistry"}]
     const studentList = [{courseName: 'Course 1', students: ['Astrid', 'Kiron', 'Mitra', 'William']},
     {courseName: 'Course 2', students: ['John', 'Doe', 'Foo', 'Bar']}]
+    const [current, setCurrent] = useState('');
 
-    function checkNames(courseList, value) {
+    // returns a list of course names given a list of courses and a partial value
+    function findPartialCourseName(courseList, value) {
         value = value.toLowerCase()
         let list = []
         let j = value.length
-
         for (let i = 0; i < courses.length; i++) {
             let n = courses[i].name
-            if (n.toLowerCase().substring(0, j) == value) {
+            if (n.toLowerCase().substring(0, j) === value) {
                 list.push(n);
             }
         }
-
         return list
     }
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
         if (event.target.value) {
-            // checkNames(courses, event.target.value)
-            console.log(checkNames(courses, event.target.value))
+            console.log(findPartialCourseName(courses, event.target.value))
+            setCurrent(findPartialCourseName(courses, event.target.value))
+        } else {
+            setCurrent([])
         }
     }
 
@@ -47,9 +48,14 @@ function SearchPage() {
                     <TextField
                         id="outlined-basic"
                         variant="outlined"
-                        label="Search"
+                        label="Class name"
                         onChange={handleTextChange}
                         />
+                        <ul>
+                        {current && current.map((course) => (
+                            <li>{course}</li>
+                        ))}
+                        </ul>
                     </Grid>
                 <Grid item>
                     <Stack direction="column" spacing={2}>
