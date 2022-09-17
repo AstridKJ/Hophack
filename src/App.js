@@ -1,12 +1,18 @@
 import { shouldSkipGeneratingVar } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup'
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-//import { View, Button, StyleSheet } from "react-native";
 import './App.css';
+import { Button } from "@mui/material";
+import {GoogleLogin} from 'react-google-login'
+import { gapi } from 'gapi-script';
+import {useEffect} from 'react'
+
+const clientId = '624977166790-o02at0pfh5uh0slf4ncs4qh56pfogotc.apps.googleusercontent.com'
 
 function App() {
+  // const [ profile, setProfile ] = useState([]);
 
   const sTitle = {
     fontSize: 80,
@@ -28,28 +34,38 @@ function App() {
 
     fontFamily: 'Abel',
     fontStyle: 'normal',
-    fontSize: 40,
+    fontSize: 35,
     color: 'black',
-  }
-
-  const button = {
-    alignItem: 'center',
-    justifyContent: 'center',
-    padding: '30px',
-    borderRadius: 15,
-    backgroundColor: '#f6f051',
   }
 
   const text = {
     alignItem: 'center',
-    fontSize: 50,
+    fontSize: 40,
       fontFamily: 'Impact',
   }
 
+  useEffect(() => {
+    const initClient = () => {
+          gapi.auth2.init({
+          clientId: clientId,
+          scope: ''
+        });
+     };
+     gapi.load('client:auth2', initClient);
+  });
+
   let navigate = useNavigate();
-  const loginClick = () =>{ 
+
+  const onSuccess = (res) => {
+    // setProfile(res.profileObj);
+    console.log('success:', res);
     navigate('/study');
-  }
+  };
+
+  const onFailure = (err) => {
+    console.log('failed:', err);
+    alert('Login failed')
+  };
 
   return (
     <div className="App">
@@ -60,10 +76,28 @@ function App() {
       <h1 style = {sTitle}>Learn</h1>
       <h1 style = {titleStyle}>Together</h1>
 
-        <Popup trigger = {<pressable style = {button} onClick = {loginClick}>
-            <text style = {text}>Login</text>
-          </pressable>} position = 'center'>
-        </Popup>
+      <GoogleLogin
+        clientId={clientId}
+        class="btn-login"
+        buttonText="Login"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+        isSignedIn={true}
+      />
+
+      {/* <Button 
+        variant="contained" 
+        class="btn-login" 
+        clientId={clientId}
+        buttonText="Sign in with Google"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+        isSignedIn={true}>
+          <text style = {text}>Login</text>
+        </Button> */}
+      
 
         <p style = {bodyStyle}> find your next study buddy </p>
       </body>

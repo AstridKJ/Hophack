@@ -53,6 +53,13 @@
   border-radius: 0px 0px 2px 2px;
 }
 
-.box {
-  
+.btn-login {
+  padding: 30px;
+  border-radius: 15px;
+  background-color: #f6f051;
+  border: none;
+}
+
+.btn-login:hover {
+  background-color:#e1dd05;
 }
