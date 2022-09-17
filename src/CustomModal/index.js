@@ -14,6 +14,7 @@ const style = {
     pt: 2,
     px: 4,
     pb: 3,
+    borderRadius: '25px'
 };
 function CustomModal({open, handleClose, student}) {
     return (
@@ -25,7 +26,7 @@ function CustomModal({open, handleClose, student}) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Modal for {student}
+                        {student}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         Email: <br/>

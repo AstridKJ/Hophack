@@ -54,14 +54,14 @@ function SearchPage() {
                         {courses ? 
                         (Object.keys(courses).map((id) => 
                             <Grid container>
-                                <Grid item xs={9}> 
-                                    <Button id={id} variant="contained" style={{width: "250px", textTransform: 'capitalize'}}
+                                <Grid item xs={7}> 
+                                    <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize'}}
                                     onClick={(event) => handleShowStudents(event.target.id)}> 
                                         {courses[id].name} 
                                     </Button>
                                 </Grid>
-                                <Grid item xs={3} margin="auto">
-                                    <DeleteIcon onClick={() => handleDeleteCourse(id)}/>
+                                <Grid item xs={5} margin="auto">
+                                <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} />
                                 </Grid>
                             </Grid>
                         )) 
