@@ -3,13 +3,41 @@ import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
 import '../App.css';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Modal } from "@mui/material";
+import { Box } from "@mui/material";
+import CustomModal from "../CustomModal";
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+
+const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+  });
 
 function SearchPage() {
     // const [courses, setCourses] = useState();
-    // const [studentList, setStudentList] = usetState();
-    const courses = [{id: 1, name: "Mathematical Foundations"}, {id: 2, name: "Probability and Statistics"}, {id: 3, name: "Biomedical Data Science"},  {id: 4, name: "Biochemistry"}]
-    const studentList = [{courseName: 'Course 1', students: ['Astrid', 'Kiron', 'Mitra', 'William']},
-    {courseName: 'Course 2', students: ['John', 'Doe', 'Foo', 'Bar']}]
+    const courses = {1: {name: "Mathematical Foundations", students: ['Astrid', 'Kiron', 'Mitra', 'William']}, 
+                    2: {name: "Probability and Statistics", students: ['John', 'Doe', 'Foo', 'Bar']},
+                    3: {name: "Biomedical Data Science", students: ['Test', 'TestName', 'Jack', 'Emily']},
+                    4: {name: "Biochemistry", students: ['Afa', 'Ged', 'Kevin', 'Emily']}}
+    const [open, setOpen] = useState(false);
+    const [studentForModal, setStudentForModal] = useState();
+    const handleOpen = (studentName) => {
+        setStudentForModal(studentName)
+        setOpen(true)
+    };
+    const handleClose = () => setOpen(false);
+
     const [current, setCurrent] = useState('');
 
     // function parseClassesArray(url) {
@@ -45,6 +73,7 @@ function SearchPage() {
         }
         return list
     }
+    
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
@@ -59,13 +88,20 @@ function SearchPage() {
 
     // Show students for course with the given id
     function handleShowStudents(id) {
-        console.log(id)
+        console.log(id);
+    }
+
+    function handleDeleteCourse(id) {
+        console.log(id);
+        // const newCourses = courses;
+        // delete newCourses[id];
+        // setCourses(newCourses);
     }
 
     return (
         <div>
         <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
-            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+            <d  iv style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
             <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs>
                 <Grid item style={{width:'100%'}}>
                     <TextField
@@ -84,20 +120,27 @@ function SearchPage() {
                 <Grid item>
                     <Stack direction="column" spacing={2}>
                         {courses ? 
-                        (courses.map(({id, name}) => 
-                            <Button id={id} variant="contained" style={{width: "250px", textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
-                            onClick={(event) => handleShowStudents(event.target.id)}> 
-                                {name} 
-                            </Button>
+                        (Object.keys(courses).map((id) => 
+                            <Grid container>
+                                <Grid item xs={6}> 
+                                    <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
+                                    onClick={(event) => handleShowStudents(event.target.id)}> 
+                                        <Typography> {courses[id].name} </Typography>
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={6} margin="auto">
+                                <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} />
+                                </Grid>
+                            </Grid>
                         )) 
                         : null}
                     </Stack>
                 </Grid>
             </Grid>
-            </div>
+            </d>
 
             
-            {studentList.map((courseInfo) => 
+            {Object.keys(courses).map((id) => 
             <Grid container item xs style={{paddingTop:'80px'}}>
                 <Grid item xs>
                     {/* <Card sx={{ minWidth: 275 }}>
@@ -105,11 +148,11 @@ function SearchPage() {
                         </CardContent>
                     </Card> */}
                     <Typography variant="h4" align="center" style={{paddingBottom:'40px'}}>
-                        {courseInfo.courseName}
+                        {courses[id].name}
                     </Typography>
                     <Stack direction="column" spacing={2} alignItems="center"> 
-                        {courseInfo.students ? 
-                        courseInfo.students.map((studentName) => 
+                        {courses[id].students ? 
+                        courses[id].students.map((studentName) => 
                         <IconButton style={{borderRadius:'5px'}}>
                             <Paper style={{width: '250px', border:'1px solid #0078BB'}}>
                                 {studentName}
@@ -119,6 +162,7 @@ function SearchPage() {
                         : null}
                     </Stack>
                 </Grid>
+                <CustomModal open={open} handleClose={handleClose} student={studentForModal}/>
             </Grid>
             )}
 
