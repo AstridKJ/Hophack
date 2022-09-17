@@ -116,19 +116,19 @@ function SearchPage() {
                             <Button variant="contained" class="popup" style={{borderTop:'none'}}>{course}</Button>
                         ))}
                         </div>
-                    </Grid>
+                </Grid>
                 <Grid item>
                     <Stack direction="column" spacing={2}>
                         {courses ? 
                         (Object.keys(courses).map((id) => 
                             <Grid container>
-                                <Grid item xs={6}> 
+                                <Grid item xs={10}> 
                                     <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
                                     onClick={(event) => handleShowStudents(event.target.id)}> 
                                         <Typography> {courses[id].name} </Typography>
                                     </Button>
                                 </Grid>
-                                <Grid item xs={6} margin="auto">
+                                <Grid item xs={2} margin="auto">
                                 <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} />
                                 </Grid>
                             </Grid>
@@ -142,18 +142,14 @@ function SearchPage() {
             
             {Object.keys(courses).map((id) => 
             <Grid container item xs style={{paddingTop:'80px'}}>
-                <Grid item xs>
-                    {/* <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                        </CardContent>
-                    </Card> */}
-                    <Typography variant="h4" align="center" style={{paddingBottom:'40px'}}>
+                <Grid item xs>  
+                    <Typography variant="h4" align="center" style={{paddingBottom:'40px', height: '80px'}}>
                         {courses[id].name}
                     </Typography>
                     <Stack direction="column" spacing={2} alignItems="center"> 
                         {courses[id].students ? 
                         courses[id].students.map((studentName) => 
-                        <IconButton style={{borderRadius:'5px'}}>
+                        <IconButton style={{borderRadius:'5px', padding: '0px'}} onClick={() => handleOpen(studentName)}>
                             <Paper style={{width: '250px', border:'1px solid #0078BB'}}>
                                 {studentName}
                             </Paper>
