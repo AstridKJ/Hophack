@@ -2,8 +2,6 @@ import { TextField , Grid, Typography, Paper, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
-import { Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal } from "@mui/material";
@@ -80,7 +78,7 @@ function SearchPage() {
     return (
         <div>
         <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
-            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+            <d  iv style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
             <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs>
                 <Grid item style={{width:'100%'}}>
                     <TextField
@@ -116,7 +114,7 @@ function SearchPage() {
                     </Stack>
                 </Grid>
             </Grid>
-            </div>
+            </d>
 
             {Object.keys(courses).map((id) => 
             <Grid container item xs spacing='10px'>
