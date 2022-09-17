@@ -11,9 +11,21 @@ function SearchPage() {
     const studentList = [{courseName: 'Course 1', students: ['Astrid', 'Kiron', 'Mitra', 'William']},
     {courseName: 'Course 2', students: ['John', 'Doe', 'Foo', 'Bar']}]
 
+    function checkNames(courseList, value) {
+        for (let i = 0; i < courses.length; i++) {
+            let n = courses[i].name
+            if (n.includes(value)) {
+                return true;
+            }
+        }
+        return false
+    }
+
     // Find courses as user types in the TextField
     function handleTextChange(event) {
-        console.log(event.target.value);
+        if (event.target.value) {
+            console.log(checkNames(courses, event.target.value))
+        }
     }
 
     // Show students for course with the given id
