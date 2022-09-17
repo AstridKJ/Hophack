@@ -6,6 +6,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import CustomModal from "../CustomModal";
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+
+const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+  });
 
 function SearchPage() {
     // const [courses, setCourses] = useState();
@@ -39,8 +55,9 @@ function SearchPage() {
 
     return (
         <div>
+        <ThemeProvider theme={theme}>
         <Grid container direction="row" style={{  marginTop: '40px' }}>
-            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px' }} xs>
+            <Grid item container direction="column" spacing='10px' style={{  marginLeft: '10px' }} xs>
                 <Grid item>
                     <TextField
                         id="outlined-basic"
@@ -57,7 +74,7 @@ function SearchPage() {
                                 <Grid item xs={7}> 
                                     <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize'}}
                                     onClick={(event) => handleShowStudents(event.target.id)}> 
-                                        {courses[id].name} 
+                                        <Typography> {courses[id].name} </Typography>
                                     </Button>
                                 </Grid>
                                 <Grid item xs={5} margin="auto">
@@ -71,17 +88,17 @@ function SearchPage() {
             </Grid>
 
             {Object.keys(courses).map((id) => 
-            <Grid container item xs >
+            <Grid container item xs spacing='10px'>
                 <Grid item xs>
                     <Typography variant="h4" align="center">
-                        {courses[id].courseName}
+                        {courses[id].name}
                     </Typography>
-                    <Stack direction="column" spacing={2} alignItems="center"> 
+                    <Stack direction="column" spacing={2} alignItems="center" marginTop='10px'> 
                         {courses[id].students ? 
                         courses[id].students.map((studentName) => 
-                        <IconButton onClick={() => handleOpen(studentName)}>
+                        <IconButton onClick={() => handleOpen(studentName)} style={{padding: '0px'}}>
                             <Paper style={{width: '250px'}}>
-                                {studentName}
+                            <Typography align="center"> {studentName} </Typography>
                             </Paper>
                         </IconButton>
                         )
@@ -93,6 +110,7 @@ function SearchPage() {
             )}
 
         </Grid>
+        </ThemeProvider>
         </div>
   );
 }
