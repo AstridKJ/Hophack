@@ -7,23 +7,29 @@ import List from '@mui/material/List';
 function SearchPage() {
     // const [courses, setCourses] = useState();
     // const [studentList, setStudentList] = usetState();
-    const courses = [{id: 1, name: "course 1"}, {id: 2, name: "course 2"}, {id: 3, name: "course 3"}]
+    const courses = [{id: 1, name: "Mathematical Foundations"}, {id: 2, name: "Probability and Statistics"}, {id: 3, name: "Biomedical Data Science"},  {id: 4, name: "Biochemistry"}]
     const studentList = [{courseName: 'Course 1', students: ['Astrid', 'Kiron', 'Mitra', 'William']},
     {courseName: 'Course 2', students: ['John', 'Doe', 'Foo', 'Bar']}]
 
     function checkNames(courseList, value) {
+        value = value.toLowerCase()
+        let list = []
+        let j = value.length
+
         for (let i = 0; i < courses.length; i++) {
             let n = courses[i].name
-            if (n.includes(value)) {
-                return true;
+            if (n.toLowerCase().substring(0, j) == value) {
+                list.push(n);
             }
         }
-        return false
+
+        return list
     }
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
         if (event.target.value) {
+            // checkNames(courses, event.target.value)
             console.log(checkNames(courses, event.target.value))
         }
     }
