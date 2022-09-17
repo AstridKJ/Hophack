@@ -57,9 +57,16 @@
   padding: 30px;
   border-radius: 15px;
   background-color: #f6f051;
+  font-size: 50px;
+  font-family: 'Impact';
   border: none;
 }
 
 .btn-login:hover {
   background-color:#e1dd05;
+}
+
+.login-bg {
+  background: white url("../public/sample_bg.png") no-repeat fixed center;
+  background-size: cover;
 }

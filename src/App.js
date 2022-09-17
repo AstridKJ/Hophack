@@ -16,26 +16,28 @@ function App() {
 
   const sTitle = {
     fontSize: 80,
-    fontFamily: 'Abel',
     width: 1100,
-    height: 10,
+    height: 40,
+    paddingTop: '10px',
+    paddingBottom: '20px',
+    color: 'white'
   }
 
   const titleStyle = {
+    paddingTop: '60px',
     fontFamily: 'Impact',
     fontSize: 100,
     width: 1600,
-    height: 200,
     color: '#484848',
   }
 
   const bodyStyle = {
     alignItem: 'center',
-
-    fontFamily: 'Abel',
     fontStyle: 'normal',
     fontSize: 35,
-    color: 'black',
+    color: 'white',
+    marginLeft: '100px',
+    paddingBottom: '60px'
   }
 
   const text = {
@@ -58,13 +60,14 @@ function App() {
 
   const onSuccess = (res) => {
     // setProfile(res.profileObj);
-    console.log('success:', res);
+    // onSuccess = false;
     navigate('/study');
+    console.log('success:', res);
   };
 
   const onFailure = (err) => {
     console.log('failed:', err);
-    alert('Login failed')
+    // alert('Login failed')
   };
 
   return (
@@ -72,32 +75,21 @@ function App() {
       <head>
         <title>Learn_Together</title>
       </head>
-      <body> 
+      <body class="login-bg"  style={{paddingTop: '10px'}}> 
       <h1 style = {sTitle}>Learn</h1>
       <h1 style = {titleStyle}>Together</h1>
 
       <GoogleLogin
         clientId={clientId}
         class="btn-login"
-        buttonText="Login"
+        render={renderProps => (
+          <button onClick={renderProps.onClick} class="btn-login">Login</button>
+        )}
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}
         isSignedIn={true}
       />
-
-      {/* <Button 
-        variant="contained" 
-        class="btn-login" 
-        clientId={clientId}
-        buttonText="Sign in with Google"
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        cookiePolicy={'single_host_origin'}
-        isSignedIn={true}>
-          <text style = {text}>Login</text>
-        </Button> */}
-      
 
         <p style = {bodyStyle}> find your next study buddy </p>
       </body>
