@@ -77,16 +77,17 @@ function SearchPage() {
             </Grid>
             </div>
 
+            
             {studentList.map((courseInfo) => 
-            <Grid container item xs >
+            <Grid container item xs style={{paddingTop:'50px'}}>
                 <Grid item xs>
-                    <Typography variant="h4" align="center">
+                    <Typography variant="h4" align="center" style={{paddingBottom:'10px'}}>
                         {courseInfo.courseName}
                     </Typography>
                     <Stack direction="column" spacing={2} alignItems="center"> 
                         {courseInfo.students ? 
                         courseInfo.students.map((studentName) => 
-                        <IconButton>
+                        <IconButton style={{borderRadius:'5px'}}>
                             <Paper style={{width: '250px'}}>
                                 {studentName}
                             </Paper>
