@@ -2,17 +2,35 @@ import { TextField , Grid, Typography, Paper, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
-import { Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 
 function SearchPage() {
     // const [courses, setCourses] = useState();
     // const [studentList, setStudentList] = usetState();
-    const courses = [{id: 0, name: "Hello"}, {id: 1, name: "Mathematical Foundations"}, {id: 2, name: "Probability and Statistics"}, {id: 3, name: "Biomedical Data Science"},  {id: 4, name: "Biochemistry"}]
+    const courses = [{id: 1, name: "Mathematical Foundations"}, {id: 2, name: "Probability and Statistics"}, {id: 3, name: "Biomedical Data Science"},  {id: 4, name: "Biochemistry"}]
     const studentList = [{courseName: 'Course 1', students: ['Astrid', 'Kiron', 'Mitra', 'William']},
     {courseName: 'Course 2', students: ['John', 'Doe', 'Foo', 'Bar']}]
     const [current, setCurrent] = useState('');
+
+    // function parseClassesArray(url) {
+
+    // }
+
+    // function handleAPIHelper(url) {
+    //     return fetch(url)
+    //     .then((response) => response.json())
+    //     .then((responseJson) => {
+    //       return parseAPI(responseJson);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    //  }
+
+    // function handleAPI() {
+    //     let url = "https://sis.jhu.edu/api/classes/Whiting%20School%20of%20Engineering/current?key=PujT3qlFrppEUi1vRT0z9XqQShqEFOWd"
+    //     setCourses(getClasses(url))
+    // }
 
     // returns a list of course names given a list of courses and a partial value
     function findPartialCourseName(courseList, value) {
@@ -30,7 +48,8 @@ function SearchPage() {
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
-        if (event.target.value) {
+        // handleAPI()
+        if (event.target.value && courses) {
             console.log(findPartialCourseName(courses, event.target.value))
             setCurrent(findPartialCourseName(courses, event.target.value))
         } else {
@@ -58,7 +77,7 @@ function SearchPage() {
                         />
                         <div style={{marginTop:'0px', marginLeft:'0px'}}>
                         {current && current.map((course) => (
-                            <Button class="popup" >{course}</Button>
+                            <Button variant="contained" class="popup" style={{borderTop:'none'}}>{course}</Button>
                         ))}
                         </div>
                     </Grid>
@@ -79,16 +98,20 @@ function SearchPage() {
 
             
             {studentList.map((courseInfo) => 
-            <Grid container item xs style={{paddingTop:'50px'}}>
+            <Grid container item xs style={{paddingTop:'80px'}}>
                 <Grid item xs>
-                    <Typography variant="h4" align="center" style={{paddingBottom:'10px'}}>
+                    {/* <Card sx={{ minWidth: 275 }}>
+                        <CardContent>
+                        </CardContent>
+                    </Card> */}
+                    <Typography variant="h4" align="center" style={{paddingBottom:'40px'}}>
                         {courseInfo.courseName}
                     </Typography>
                     <Stack direction="column" spacing={2} alignItems="center"> 
                         {courseInfo.students ? 
                         courseInfo.students.map((studentName) => 
                         <IconButton style={{borderRadius:'5px'}}>
-                            <Paper style={{width: '250px'}}>
+                            <Paper style={{width: '250px', border:'1px solid #0078BB'}}>
                                 {studentName}
                             </Paper>
                         </IconButton>
