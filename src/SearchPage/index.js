@@ -2,6 +2,9 @@ import { TextField , Grid, Typography, Paper, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
+import { Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
@@ -34,11 +37,32 @@ function SearchPage() {
         setOpen(true)
     };
     const handleClose = () => setOpen(false);
+
+    const [current, setCurrent] = useState('');
+
+    // returns a list of course names given a list of courses and a partial value
+    function findPartialCourseName(courseList, value) {
+        value = value.toLowerCase()
+        let list = []
+        let j = value.length
+        for (let i = 0; i < courses.length; i++) {
+            let n = courses[i].name
+            if (n.toLowerCase().substring(0, j) === value) {
+                list.push(n);
+            }
+        }
+        return list
+    }
     
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
-        console.log(event.target.value);
+        if (event.target.value) {
+            console.log(findPartialCourseName(courses, event.target.value))
+            setCurrent(findPartialCourseName(courses, event.target.value))
+        } else {
+            setCurrent([])
+        }
     }
 
     // Show students for course with the given id
@@ -55,16 +79,22 @@ function SearchPage() {
 
     return (
         <div>
-        <ThemeProvider theme={theme}>
-        <Grid container direction="row" style={{  marginTop: '40px' }}>
-            <Grid item container direction="column" spacing='10px' style={{  marginLeft: '10px' }} xs>
-                <Grid item>
+        <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
+            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs>
+                <Grid item style={{width:'100%'}}>
                     <TextField
+                        style={{width:'100%', borderColor:'#F6F051'}}
                         id="outlined-basic"
                         variant="outlined"
-                        label="Search"
+                        label="Class name"
                         onChange={handleTextChange}
                         />
+                        <div style={{marginTop:'0px', marginLeft:'0px'}}>
+                        {current && current.map((course) => (
+                            <Button class="popup" >{course}</Button>
+                        ))}
+                        </div>
                     </Grid>
                 <Grid item>
                     <Stack direction="column" spacing={2}>
@@ -72,7 +102,7 @@ function SearchPage() {
                         (Object.keys(courses).map((id) => 
                             <Grid container>
                                 <Grid item xs={6}> 
-                                    <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize'}}
+                                    <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
                                     onClick={(event) => handleShowStudents(event.target.id)}> 
                                         <Typography> {courses[id].name} </Typography>
                                     </Button>
@@ -86,6 +116,7 @@ function SearchPage() {
                     </Stack>
                 </Grid>
             </Grid>
+            </div>
 
             {Object.keys(courses).map((id) => 
             <Grid container item xs spacing='10px'>
@@ -96,7 +127,7 @@ function SearchPage() {
                     <Stack direction="column" spacing={2} alignItems="center" marginTop='10px'> 
                         {courses[id].students ? 
                         courses[id].students.map((studentName) => 
-                        <IconButton onClick={() => handleOpen(studentName)} style={{padding: '0px'}}>
+                        <IconButton onClick={() => handleOpen(studentName)} style={{padding: '0px', borderRadius:'5px'}}>
                             <Paper style={{width: '250px'}}>
                             <Typography align="center"> {studentName} </Typography>
                             </Paper>
@@ -110,7 +141,6 @@ function SearchPage() {
             )}
 
         </Grid>
-        </ThemeProvider>
         </div>
   );
 }
