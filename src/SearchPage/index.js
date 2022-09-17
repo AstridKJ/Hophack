@@ -2,6 +2,9 @@ import { TextField , Grid, Typography, Paper, IconButton } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
+import { Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css';
 
 function SearchPage() {
     // const [courses, setCourses] = useState();
@@ -42,26 +45,28 @@ function SearchPage() {
 
     return (
         <div>
-        <Grid container direction="row" style={{  marginTop: '40px' }}>
-            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px' }} xs>
-                <Grid item>
+        <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
+            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs>
+                <Grid item style={{width:'100%'}}>
                     <TextField
+                        style={{width:'100%', borderColor:'#F6F051'}}
                         id="outlined-basic"
                         variant="outlined"
                         label="Class name"
                         onChange={handleTextChange}
                         />
-                        <ul>
+                        <div style={{marginTop:'0px', marginLeft:'0px'}}>
                         {current && current.map((course) => (
-                            <li>{course}</li>
+                            <Button class="popup" >{course}</Button>
                         ))}
-                        </ul>
+                        </div>
                     </Grid>
                 <Grid item>
                     <Stack direction="column" spacing={2}>
                         {courses ? 
                         (courses.map(({id, name}) => 
-                            <Button id={id} variant="contained" style={{width: "250px", textTransform: 'capitalize'}}
+                            <Button id={id} variant="contained" style={{width: "250px", textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
                             onClick={(event) => handleShowStudents(event.target.id)}> 
                                 {name} 
                             </Button>
@@ -70,6 +75,7 @@ function SearchPage() {
                     </Stack>
                 </Grid>
             </Grid>
+            </div>
 
             {studentList.map((courseInfo) => 
             <Grid container item xs >
@@ -80,7 +86,7 @@ function SearchPage() {
                     <Stack direction="column" spacing={2} alignItems="center"> 
                         {courseInfo.students ? 
                         courseInfo.students.map((studentName) => 
-                        <IconButton >
+                        <IconButton>
                             <Paper style={{width: '250px'}}>
                                 {studentName}
                             </Paper>
