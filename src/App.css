@@ -37,6 +37,11 @@
   }
 }
 
+html {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 #outlined-basic {
   color: black;
   background-color:white;
@@ -55,6 +60,7 @@
 
 .btn-login {
   padding: 30px;
+  margin-top: 70px;
   border-radius: 15px;
   background-color: #f6f051;
   font-size: 50px;

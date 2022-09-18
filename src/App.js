@@ -18,13 +18,13 @@ function App() {
     fontSize: 80,
     width: 1100,
     height: 40,
-    paddingTop: '10px',
-    paddingBottom: '20px',
+    paddingTop: '0px',
+    paddingBottom: '0px',
     color: 'white'
   }
 
   const titleStyle = {
-    paddingTop: '60px',
+    paddingTop: '110px',
     fontFamily: 'Impact',
     fontSize: 100,
     width: 1600,
@@ -36,14 +36,15 @@ function App() {
     fontStyle: 'normal',
     fontSize: 35,
     color: 'white',
-    marginLeft: '100px',
+    marginLeft: '140px',
+    marginTop:'30px',
     paddingBottom: '60px'
   }
 
   const text = {
     alignItem: 'center',
     fontSize: 40,
-      fontFamily: 'Impact',
+    fontFamily: 'Impact',
   }
 
   useEffect(() => {
@@ -75,7 +76,7 @@ function App() {
       <head>
         <title>Learn_Together</title>
       </head>
-      <body class="login-bg"  style={{paddingTop: '10px'}}> 
+      <body class="login-bg"  style={{paddingTop: '90px'}}> 
       <h1 style = {sTitle}>Learn</h1>
       <h1 style = {titleStyle}>Together</h1>
 
