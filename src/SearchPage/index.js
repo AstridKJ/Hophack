@@ -4,11 +4,14 @@ import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
 import '../App.css';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import CustomModal from "../CustomModal";
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
+import FormModal from "../FormModal";
+import 'bootstrap/dist/css/bootstrap.css';
 
 const theme = createTheme({
     typography: {
@@ -37,6 +40,10 @@ function SearchPage() {
         setOpen(true)
     };
     const handleClose = () => setOpen(false);
+
+    const [formOpen, setFormOpen] = useState(false);
+    const formClose = () => setFormOpen(false);
+    const formShow = () => setFormOpen(true);
 
     const [current, setCurrent] = useState('');
 
@@ -73,7 +80,6 @@ function SearchPage() {
         }
         return list
     }
-    
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
@@ -97,6 +103,10 @@ function SearchPage() {
         // delete newCourses[id];
         // setCourses(newCourses);
     }
+    
+    function handleFormPopup(id) {
+        setFormOpen(true)
+    }
 
     return (
         <div>
@@ -118,24 +128,28 @@ function SearchPage() {
                         </div>
                 </Grid>
                 <Grid item>
-                    <Stack direction="column" spacing={2}>
+                    <Stack direction="column" spacing={3}>
                         {courses ? 
                         (Object.keys(courses).map((id) => 
                             <Grid container>
-                                <Grid item xs={10}> 
+                                <Grid item xs={9}> 
                                     <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
                                     onClick={(event) => handleShowStudents(event.target.id)}> 
-                                        <Typography> {courses[id].name} </Typography>
+                                        <Typography style={{padding: '5px 0px'}}> {courses[id].name} </Typography>
                                     </Button>
                                 </Grid>
-                                <Grid item xs={2} margin="auto">
-                                <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} style={{color: '#13a0ec'}}/>
+                                <Grid item xs={1} margin="auto">
+                                <Button startIcon={<AddBoxIcon style={{fontSize:'25px'}} />} onClick={() => handleFormPopup(id)} style={{color:'white'}}/>
+                                </Grid>
+                                <Grid item xs={1} margin="auto">
+                                <Button startIcon={<DeleteIcon style={{fontSize:'25px'}} />} onClick={() => handleDeleteCourse(id)} style={{color: '#13a0ec'}}/>
                                 </Grid>
                             </Grid>
                         )) 
                         : null}
                     </Stack>
                 </Grid>
+                <FormModal formOpen={formOpen} formClose={formClose}/>
             </Grid>
             </div>
 
@@ -143,7 +157,7 @@ function SearchPage() {
             {Object.keys(courses).map((id) => 
             <Grid container item xs style={{paddingTop:'80px'}}>
                 <Grid item xs>  
-                    <Typography variant="h4" align="center" style={{paddingBottom:'40px', height: '80px'}}>
+                    <Typography variant="h4" align="center" style={{marginBottom:'30px', height: '80px', fontSize: '33px'}}>
                         {courses[id].name}
                     </Typography>
                     <Stack direction="column" spacing={2} alignItems="center"> 
