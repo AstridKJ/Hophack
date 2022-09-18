@@ -150,7 +150,7 @@ function SearchPage() {
                         {courses[id].students ? 
                         courses[id].students.map((studentName) => 
                         <IconButton style={{borderRadius:'5px', padding: '0px'}} onClick={() => handleOpen(studentName)}>
-                            <Paper style={{width: '200px', border:'1px solid #0078BB'}}>
+                            <Paper style={{width: '200px', padding: '20px 0px', border:'1px solid #0078BB'}}>
                                 {studentName}
                             </Paper>
                         </IconButton>

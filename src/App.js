@@ -88,7 +88,7 @@ function App() {
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}
-        isSignedIn={true}
+        // isSignedIn={true}
       />
 
         <p style = {bodyStyle}> find your next study buddy </p>
