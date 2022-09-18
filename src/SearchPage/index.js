@@ -28,7 +28,11 @@ const theme = createTheme({
   });
 
 function SearchPage() {
-    const [courses, setCourses] = useState({});
+    const [courses, setCourses] = useState({1: {name: "Mathematical Foundations", students: ['Astrid', 'Kiron', 'Mitra', 'William']}, 
+    2: {name: "Probability and Statistics", students: ['John', 'Doe', 'Foo']},
+    3: {name: "Biomedical Data Science", students: ['Test', 'TestName', 'Jack', 'Emily']},
+    4: {name: "Biochemistry", students: ['Afa', 'Ged', 'Kevin', 'Emily']}});
+
     // const courses = {1: {name: "Mathematical Foundations", students: ['Astrid', 'Kiron', 'Mitra', 'William']}, 
     //                 2: {name: "Probability and Statistics", students: ['John', 'Doe', 'Foo']},
     //                 3: {name: "Biomedical Data Science", students: ['Test', 'TestName', 'Jack', 'Emily']},
