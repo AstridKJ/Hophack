@@ -16,6 +16,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
 import FormModal from "../FormModal";
 import 'bootstrap/dist/css/bootstrap.css';
+import Container from 'react-bootstrap/Container';
 
 const theme = createTheme({
     typography: {
@@ -109,7 +110,9 @@ function SearchPage() {
 
     function addCourse() {
         const newId = Date.now()
-        setCourses({...courses, [newId]: {name: courseEntered, students: []}})
+        if (courseEntered) {
+            setCourses({...courses, [newId]: {name: courseEntered, students: []}})
+        }
     }
     
     function handleFormPopup(id) {
@@ -118,8 +121,8 @@ function SearchPage() {
 
     return (
         <div>
-        <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
-            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+        <Grid container direction="row" style={{height:'60vh'}}>
+            <div style={{marginLeft:'-40px', paddingRight:'40px', paddingTop:'80px', paddingBottom:'60px', marginRight:'30px', backgroundColor:'#484848'}}>
             <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs alignItems="center">
                 <Grid item style={{width:'70%'}}>
 
@@ -163,10 +166,9 @@ function SearchPage() {
                 <FormModal formOpen={formOpen} formClose={formClose}/>
             </Grid>
             </div>
-
             
             {Object.keys(courses).map((id) => 
-            <Grid container item xs style={{paddingTop:'80px'}}>
+            <Grid xs="2" style={{paddingTop:'80px'}}>
                 <Grid item xs>  
                     <Typography variant="h4" align="center" style={{marginBottom:'30px', height: '80px', fontSize: '33px'}}>
                         {courses[id].name}
