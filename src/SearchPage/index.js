@@ -100,8 +100,8 @@ function SearchPage() {
 
     return (
         <div>
-        <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
-            <d  iv style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+        <Grid container direction="row" style={{height:'200vh'}}>
+            <div style={{marginRight:'30px', paddingRight:'70px', paddingTop:'100px', backgroundColor:'#484848'}}>
             <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs>
                 <Grid item style={{width:'100%'}}>
                     <TextField
@@ -129,7 +129,7 @@ function SearchPage() {
                                     </Button>
                                 </Grid>
                                 <Grid item xs={2} margin="auto">
-                                <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} />
+                                <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} style={{color: '#13a0ec'}}/>
                                 </Grid>
                             </Grid>
                         )) 
@@ -137,7 +137,7 @@ function SearchPage() {
                     </Stack>
                 </Grid>
             </Grid>
-            </d>
+            </div>
 
             
             {Object.keys(courses).map((id) => 
@@ -150,7 +150,7 @@ function SearchPage() {
                         {courses[id].students ? 
                         courses[id].students.map((studentName) => 
                         <IconButton style={{borderRadius:'5px', padding: '0px'}} onClick={() => handleOpen(studentName)}>
-                            <Paper style={{width: '250px', border:'1px solid #0078BB'}}>
+                            <Paper style={{width: '200px', border:'1px solid #0078BB'}}>
                                 {studentName}
                             </Paper>
                         </IconButton>
