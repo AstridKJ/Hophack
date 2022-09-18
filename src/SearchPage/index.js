@@ -4,6 +4,7 @@ import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
 import '../App.css';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import CustomModal from "../CustomModal";
@@ -13,6 +14,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
+import FormModal from "../FormModal";
+import 'bootstrap/dist/css/bootstrap.css';
+
 const theme = createTheme({
     typography: {
       fontFamily: [
@@ -47,6 +51,10 @@ function SearchPage() {
     };
     const handleClose = () => setOpen(false);
 
+    const [formOpen, setFormOpen] = useState(false);
+    const formClose = () => setFormOpen(false);
+    const formShow = () => setFormOpen(true);
+
     const [current, setCurrent] = useState('');
     // function fetchCourses(event) {
     //     fetch("https://sis.jhu.edu/api/classes?key=rbEzDfQj3BN8orclCPPzilOe49UpGWVx&CourseTitle=" + event.target.value)
@@ -75,7 +83,6 @@ function SearchPage() {
         }
         return list
     }
-    
 
     // Find courses as user types in the TextField
     function handleTextChange(event) {
@@ -104,11 +111,15 @@ function SearchPage() {
         const newId = Date.now()
         setCourses({...courses, [newId]: {name: courseEntered, students: []}})
     }
+    
+    function handleFormPopup(id) {
+        setFormOpen(true)
+    }
 
     return (
         <div>
         <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
-            <d  iv style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
             <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs alignItems="center">
                 <Grid item style={{width:'70%'}}>
 
@@ -128,39 +139,43 @@ function SearchPage() {
                         
                 </Grid>
                 <Grid item>
-                    <Stack direction="column" spacing={2}>
+                    <Stack direction="column" spacing={3}>
                         {courses ? 
                         (Object.keys(courses).map((id) => 
                             <Grid container>
-                                <Grid item xs={10}> 
+                                <Grid item xs={9}> 
                                     <Button id={id} variant="contained" fullWidth style={{ textTransform: 'capitalize', color:'#484848', backgroundColor: '#F6F051'}}
                                     onClick={(event) => handleShowStudents(event.target.id)}> 
-                                        <Typography> {courses[id].name} </Typography>
+                                        <Typography style={{padding: '5px 0px'}}> {courses[id].name} </Typography>
                                     </Button>
                                 </Grid>
-                                <Grid item xs={2} margin="auto">
-                                <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteCourse(id)} />
+                                <Grid item xs={1} margin="auto">
+                                <Button startIcon={<AddBoxIcon style={{fontSize:'25px'}} />} onClick={() => handleFormPopup(id)} style={{color:'white'}}/>
+                                </Grid>
+                                <Grid item xs={1} margin="auto">
+                                <Button startIcon={<DeleteIcon style={{fontSize:'25px'}} />} onClick={() => handleDeleteCourse(id)} style={{color: '#13a0ec'}}/>
                                 </Grid>
                             </Grid>
                         )) 
                         : null}
                     </Stack>
                 </Grid>
+                <FormModal formOpen={formOpen} formClose={formClose}/>
             </Grid>
-            </d>
+            </div>
 
             
             {Object.keys(courses).map((id) => 
             <Grid container item xs style={{paddingTop:'80px'}}>
                 <Grid item xs>  
-                    <Typography variant="h4" align="center" style={{paddingBottom:'40px', height: '80px'}}>
+                    <Typography variant="h4" align="center" style={{marginBottom:'30px', height: '80px', fontSize: '33px'}}>
                         {courses[id].name}
                     </Typography>
                     <Stack direction="column" spacing={2} alignItems="center"> 
                         {courses[id].students ? 
                         courses[id].students.map((studentName) => 
                         <IconButton style={{borderRadius:'5px', padding: '0px'}} onClick={() => handleOpen(studentName)}>
-                            <Paper style={{width: '250px', border:'1px solid #0078BB'}}>
+                            <Paper style={{width: '200px', padding: '20px 0px', border:'1px solid #0078BB'}}>
                                 {studentName}
                             </Paper>
                         </IconButton>
