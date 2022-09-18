@@ -122,7 +122,7 @@ function SearchPage() {
     return (
         <div>
         <Grid container direction="row" style={{height:'60vh'}}>
-            <div style={{marginLeft:'-40px', paddingRight:'40px', paddingTop:'80px', paddingBottom:'60px', marginRight:'30px', backgroundColor:'#484848'}}>
+            <div style={{marginLeft:'-40px', paddingRight:'40px', paddingTop:'80px', paddingBottom:'60px', marginRight:'30px', backgroundColor:'#484848', borderRadius:'0px 0px 15px 0px'}}>
             <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs alignItems="center">
                 <Grid item style={{width:'70%'}}>
 
