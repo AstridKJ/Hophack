@@ -10,6 +10,10 @@ import { Box } from "@mui/material";
 import CustomModal from "../CustomModal";
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
+import { useEffect } from "react";
+import axios from "axios";
+import Autocomplete from '@mui/material/Autocomplete';
+import AddIcon from '@mui/icons-material/Add';
 import FormModal from "../FormModal";
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -28,11 +32,17 @@ const theme = createTheme({
   });
 
 function SearchPage() {
-    // const [courses, setCourses] = useState();
-    const courses = {1: {name: "Mathematical Foundations", students: ['Astrid', 'Kiron', 'Mitra', 'William']}, 
-                    2: {name: "Probability and Statistics", students: ['John', 'Doe', 'Foo', 'Bar']},
-                    3: {name: "Biomedical Data Science", students: ['Test', 'TestName', 'Jack', 'Emily']},
-                    4: {name: "Biochemistry", students: ['Afa', 'Ged', 'Kevin', 'Emily']}}
+    const [courses, setCourses] = useState({1: {name: "Mathematical Foundations", students: ['Astrid', 'Kiron', 'Mitra', 'William']}, 
+    2: {name: "Probability and Statistics", students: ['John', 'Doe', 'Foo']},
+    3: {name: "Biomedical Data Science", students: ['Test', 'TestName', 'Jack', 'Emily']},
+    4: {name: "Biochemistry", students: ['Afa', 'Ged', 'Kevin', 'Emily']}});
+
+    // const courses = {1: {name: "Mathematical Foundations", students: ['Astrid', 'Kiron', 'Mitra', 'William']}, 
+    //                 2: {name: "Probability and Statistics", students: ['John', 'Doe', 'Foo']},
+    //                 3: {name: "Biomedical Data Science", students: ['Test', 'TestName', 'Jack', 'Emily']},
+    //                 4: {name: "Biochemistry", students: ['Afa', 'Ged', 'Kevin', 'Emily']}}
+    const [courseEntered, setCourseEntered] = useState();
+    const [allCourses, setAllCourses] = useState([]);
     const [open, setOpen] = useState(false);
     const [studentForModal, setStudentForModal] = useState();
     const handleOpen = (studentName) => {
@@ -46,26 +56,19 @@ function SearchPage() {
     const formShow = () => setFormOpen(true);
 
     const [current, setCurrent] = useState('');
-
-    // function parseClassesArray(url) {
-
-    // }
-
-    // function handleAPIHelper(url) {
-    //     return fetch(url)
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //       return parseAPI(responseJson);
+    // function fetchCourses(event) {
+    //     fetch("https://sis.jhu.edu/api/classes?key=rbEzDfQj3BN8orclCPPzilOe49UpGWVx&CourseTitle=" + event.target.value)
+    //     .then((response) => response.json()).then((data) => {
+    //         setAllCourses(data.map((courseInfo) => ({label: courseInfo.Title})))
     //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    //  }
-
-    // function handleAPI() {
-    //     let url = "https://sis.jhu.edu/api/classes/Whiting%20School%20of%20Engineering/current?key=PujT3qlFrppEUi1vRT0z9XqQShqEFOWd"
-    //     setCourses(getClasses(url))
     // }
+
+    useEffect(() => {
+        fetch("https://sis.jhu.edu/api/classes?key=rbEzDfQj3BN8orclCPPzilOe49UpGWVx&Term=Fall%202010&School=Carey%20Business%20School")
+        .then((response) => response.json()).then((data) => {
+            setAllCourses([...new Set(data.map((courseInfo) => (courseInfo.Title)))])
+        })
+    }, [])
 
     // returns a list of course names given a list of courses and a partial value
     function findPartialCourseName(courseList, value) {
@@ -99,9 +102,14 @@ function SearchPage() {
 
     function handleDeleteCourse(id) {
         console.log(id);
-        // const newCourses = courses;
-        // delete newCourses[id];
-        // setCourses(newCourses);
+        const newCourses = courses;
+        delete newCourses[id];
+        setCourses({...newCourses});
+    }
+
+    function addCourse() {
+        const newId = Date.now()
+        setCourses({...courses, [newId]: {name: courseEntered, students: []}})
     }
     
     function handleFormPopup(id) {
@@ -110,22 +118,25 @@ function SearchPage() {
 
     return (
         <div>
-        <Grid container direction="row" style={{height:'200vh'}}>
-            <div style={{marginRight:'30px', paddingRight:'70px', paddingTop:'100px', backgroundColor:'#484848'}}>
-            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs>
-                <Grid item style={{width:'100%'}}>
-                    <TextField
-                        style={{width:'100%', borderColor:'#F6F051'}}
-                        id="outlined-basic"
-                        variant="outlined"
-                        label="Class name"
-                        onChange={handleTextChange}
+        <Grid container direction="row" style={{paddingLeft:'0px', height:'100vh'}}>
+            <div style={{marginLeft:'0px', paddingRight:'80px', paddingTop:'100px', backgroundColor:'#484848'}}>
+            <Grid item container direction="column" spacing='60px' style={{  marginLeft: '10px',}} xs alignItems="center">
+                <Grid item style={{width:'70%'}}>
+
+                        <Stack direction="row" spacing={0}>
+                        <Autocomplete
+                        onChange={(event, value) => setCourseEntered(value)}
+                        disablePortal
+                        id="combo-box-demo"
+                        options={allCourses}
+                        sx={{ width: 200 }}
+                        renderInput={(params) => <TextField {...params} style={{width:'100%', borderColor:'#F6F051'}} label="Add a course"/>}
                         />
-                        <div style={{marginTop:'0px', marginLeft:'0px'}}>
-                        {current && current.map((course) => (
-                            <Button variant="contained" class="popup" style={{borderTop:'none'}}>{course}</Button>
-                        ))}
-                        </div>
+                        <IconButton style={{marginLeft: '10px'}} onClick={addCourse}>
+                            <AddIcon/>
+                        </IconButton>
+                        </Stack>
+                        
                 </Grid>
                 <Grid item>
                     <Stack direction="column" spacing={3}>
