@@ -130,7 +130,7 @@ function SearchPage() {
                         id="combo-box-demo"
                         options={allCourses}
                         sx={{ width: 200 }}
-                        renderInput={(params) => <TextField {...params} style={{width:'100%', borderColor:'#F6F051'}} label="Add a course"/>}
+                        renderInput={(params) => <TextField {...params} style={{width:'100%', borderColor:'#F6F051', backgroundColor:'white', borderRadius:'5px'}} label="Add a course"/>}
                         />
                         <IconButton style={{marginLeft: '10px'}} onClick={addCourse}>
                             <AddIcon/>
